@@ -1,0 +1,665 @@
+/* ***** ESTILOS GENERALES ***** */
+/*-------------------------------*/
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  scroll-behavior: smooth; /*Para hipervículos dentro de la misma página. Hace reccorrido suave desde origen a destino*/
+}
+
+section:not(#footer){
+  min-height: 100vh; /*MUY IMPORTANTE: hace que cada <section> se acomode al alto del viewport*/
+  box-sizing: border-box;
+}
+
+/* ***** PRIMERA SECCIÓN: MENÚ ***** */
+/*-----------------------------------*/
+
+#menu{ /*Este <section> va a ser un grid container*/
+  background-color: rgb(230,28,35);
+  display: grid;
+  /*Aquí definimos el "layout" que va a tener este "grid Container", utilizando el método "grid-template-areas":*/
+  grid-template-columns: repeat(4, 200px); /*Especificamos el layout de este grid (columnas)*/
+  grid-template-rows: repeat(2, 200px); /*Especificamos el layout de este grid (filas)*/
+  justify-content: center; /*Alinea respecto a eje horizontal nuestra cuadrícula dentro del div #menu*/
+  align-content: center; /*Alinea respecto a eje vertical nuestra cuadrícula dentro del div #menu*/
+  /* Disposición que tendrán los elementos que están dentro del grid container <section id="menu"> */
+  grid-template-areas: /*Damos nombre y estructura a las 8 áreas (4colsX2filas) de nuestro grid*/
+      "about about proyectos proyectos"
+      "about about posts contacto";
+}
+
+/* Asignamos las "areas" anteriores a los elementos <div class="pieza"> dentro del grid container <section id="menu"> */
+.pieza-about{
+  grid-area: about;
+}
+
+.pieza-proyectos{
+  grid-area: proyectos;
+}
+
+.pieza-posts{ /*Este no es necesario*/
+  grid-area: posts;
+}
+
+.pieza-contacto{ /*Este no es necesario*/
+  grid-area: contacto;
+}
+
+#menu .pieza{
+  height: 100%; /*No parece ser necesario*/
+  overflow: hidden; /*Para crear una "animación" de una capa front a capa back*/
+  cursor: pointer;
+}
+
+#menu .pieza a{
+  text-decoration: none;
+}
+
+#menu .pieza .front{
+  color: white;
+  background-color: white;
+  height: 100%;
+  display: grid; /*Para poder alinear el contenido que hay dentro de los div #front*/
+  justify-items: center; /*Alineación horizontal*/
+  align-items: center; /*Alineación vertical*/
+  padding: 20px;
+  box-sizing: border-box;
+  /*Para crear "animación" al pasar el ratón sobre cada pieza del menú, utilizamos la propiedad "transition"*/
+  /*transition: all 0.5s ease;*/
+  /*El "all" implicaría afectar a todas las propiedades, por lo que una buena alternativa sería la siguiente:*/
+  transition: 0.5s ease;
+  transition-property: margin-top;
+}
+
+#menu .oculto{
+  display: none;
+}
+
+/*Necesario junto al "transition" para crear la "animación" al pasar el ratón sobre cada pieza del menú*/
+#menu .pieza:hover .front{ /*El :hover se pone en .pieza y no en .front!!!*/
+  margin-top: -100%;
+}
+
+#menu .pieza-proyectos:hover .front{  /*El :hover se pone en .pieza y no en .front!!!*/
+  margin-top: -50%; /*Para esta pieza en concreto es -50% está en la parte superior de una parte dividida en 2*/
+}
+
+#menu .pieza .back{
+  background-color: #222;
+  color: white;
+  display: grid; /*Para poder alinear el contenido que hay dentro de los div #front*/
+  justify-items: center; /*Alineación horizontal*/
+  align-items: center; /*Alineación vertical*/
+  height: 100%;
+  font-weight: bolder;
+  font-size: 28px;
+}
+
+/* Asignamos las imágenes de fondo de cada elemento <div class="pieza"> que hay dentro de <section id="menu"> */
+
+#menu .pieza-about .front{
+  background-image: url(img/ironman1.jpg);
+  /*Si la imagen fuera de dimensiones grandes, para ajustarla:*/
+  background-size: cover;
+  background-position: end center;
+  background-repeat: no-repeat;
+}
+
+#menu .pieza-proyectos .front{
+  background-image: url(img/proyectos.jpg);
+  /*Si la imagen fuera de dimensiones grandes, para ajustarla:*/
+  background-size:cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#menu .pieza-posts .front{
+  background-image: url(img/posts.jpg);
+  /*Si la imagen fuera de dimensiones grandes, para ajustarla:*/
+  background-size: cover;
+  background-position: center center;
+}
+
+#menu .pieza-contacto .front{
+  background-image: url(img/contacto.jpg);
+  /*Si la imagen fuera de dimensiones grandes, para ajustarla:*/
+  background-size: cover;
+  background-position: center center;
+}
+
+/* ***** SEGUNDA SECCIÓN: ABOUT ***** */
+/*------------------------------------*/
+
+#about{
+  background-color: rgb(44, 44, 44);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 40px;
+  padding: 50px 200px 100px 200px;
+}
+
+#about .pieza{
+  border-radius: 10px;
+  padding: 0px 30px;
+  box-sizing: border-box;
+  background-color: #eee;
+  /*Para alinear los elementos con grid dentro de cada "pieza"*/
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+#about .pieza img{
+  width: 100px;
+}
+
+#about .pieza1{
+  grid-column: 1/2;
+}
+
+#about .pieza2{
+  grid-column: 2/3;
+  grid-row: 1/3;
+}
+
+#about .pieza2 img{
+  /*width: 250px;
+  height: 250px;*/
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ***** TERCERA SECCIÓN: PROYECTOS ***** */
+/*----------------------------------------*/
+
+#proyectos { 
+  background-color: rgb(230,28,35);
+  display: grid; /*Layout generado con "grid.layoutit.com" */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 30px 10px 10px 10px;
+  grid-auto-flow: row;
+  grid-template-areas: 
+    "foto-main foto-main foto-main foto-main foto-main foto-main foto-main foto-main foto-main"
+    "foto-main foto-main foto-main foto-main foto-main foto-main foto-main foto-main foto-main"
+    "foto-main foto-main foto-main foto-main foto-main foto-main foto-main foto-main foto-main"
+    "foto-1 foto-1 foto-2 foto-2 foto-4 foto-4 foto-4 foto-5 foto-5"
+    "foto-1 foto-1 foto-2 foto-2 foto-4 foto-4 foto-4 foto-5 foto-5"
+    "foto-1 foto-1 foto-3 foto-3 foto-3 foto-6 foto-7 foto-5 foto-5"
+    "foto-10 foto-11 foto-3 foto-3 foto-3 foto-8 foto-7 foto-16 foto-16"
+    "foto-12 foto-12 foto-14 foto-14 foto-9 foto-8 foto-7 foto-16 foto-16"
+    "foto-13 foto-13 foto-14 foto-14 foto-9 foto-15 foto-15 foto-16 foto-16"
+    "foto-13 foto-13 foto-14 foto-14 foto-9 foto-15 foto-15 foto-16 foto-16";
+}
+
+#proyectos .pieza{
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#proyectos .pieza a{
+  display: grid;
+  height: 100%;
+}
+
+#proyectos .pieza:not(.foto-main){
+  opacity: 0.5;
+  transition: 0.3s ease-in;
+  transition-property: opacity, transform;
+}
+
+#proyectos .pieza:hover:not(.foto-main){
+  transform: scale(0.98);
+  opacity: 1;
+}
+  
+.foto-main { 
+  grid-area: foto-main;
+  padding: 20px;
+  color: white;
+  font-size: 20px;
+  background-image: url(img/foto-main.jpg);
+}
+.foto-main h2, .foto-main div{
+  background-color: rgba(0, 0, 0, 0.63);
+  display: inline-block;
+  padding: 20px;
+  border-radius: 5px;
+}
+.foto-1 {
+  grid-area: foto-1;
+  background-image: url(img/foto-1.jpeg);
+}
+.foto-2 {
+  grid-area: foto-2;
+  background-image: url(img/foto-2.jpg);
+}
+.foto-3 {
+  grid-area: foto-3;
+  background-image: url(img/foto-3.jpg);
+}
+.foto-4 {
+  grid-area: foto-4;
+  background-image: url(img/foto-4.jpg);
+}
+.foto-5 {
+  grid-area: foto-5;
+  background-image: url(img/foto-5.jpeg);
+}
+.foto-6 {
+  grid-area: foto-6;
+  background-image: url(img/foto-6.jpg);
+}
+.foto-7 {
+  grid-area: foto-7;
+  background-image: url(img/foto-7.jpg);
+}
+.foto-8 {
+  grid-area: foto-8;
+  background-image: url(img/foto-8.jpg);
+}
+.foto-9 {
+  grid-area: foto-9;
+  background-image: url(img/foto-9.jpg);
+}
+.foto-10 {
+  grid-area: foto-10;
+  background-image: url(img/foto-10.jpg);
+}
+.foto-11 {
+  grid-area: foto-11;
+  background-image: url(img/foto-11.jpg);
+}
+
+.foto-12 {grid-area: foto-12;
+  background-image: url(img/foto-12.jpg);
+}
+.foto-13 {
+  grid-area: foto-13;
+  background-image: url(img/foto-13.jpg);
+}
+.foto-14 {
+  grid-area: foto-14;
+  background-image: url(img/foto-14.jpg);
+}
+.foto-15 {
+  grid-area: foto-15;
+  background-image: url(img/foto-15.jpg);
+}
+.foto-16 {
+  grid-area: foto-16;
+  background-image: url(img/foto-16.png);
+}
+
+/* ***** CUARTA SECCIÓN: POSTS ***** */
+/*-----------------------------------*/
+
+#posts{
+  padding: 10px;
+  background-color: rgb(66,186,255);
+  display: grid;
+  grid-template: repeat(2,280px) / repeat(3,350px);
+  gap: 15px;
+  justify-content: center;
+  align-content: center;
+}
+
+#posts a{
+  display: grid; /*Esto es para alinear el contenido dentro de cada <div class="post"> utilizando "grid"*/
+  align-content: end;
+  border-radius: 5px;
+  /*background-image se definirá para cada ".post1", ".post2", etc...*/
+  background-color: white;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;/*Para que las esquinas de la imagen de fondo no sobresalgan sobre el borde redondeado de la capa*/
+  text-decoration: none;
+  color: white;
+}
+
+#posts .tituloPost{
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+}
+
+#posts .tituloPost:hover{
+  background-color: white;
+  color: black;
+}
+
+#posts .post1{
+  background-image: url(img/post-1.jpeg);
+}
+
+#posts .post2{
+  background-image: url(img/post-2.jpg);
+}
+
+#posts .post3{
+  background-image: url(img/post-3.jpeg);
+}
+
+#posts .post4{
+  background-image: url(img/post-4.jpg);
+}
+
+#posts .post5{
+  background-image: url(img/post-5.jpg);
+}
+
+#posts .post6{
+  background-image: url(img/post-6.jpg);
+}
+
+
+/* ***** QUINTA SECCIÓN: CONTACTO ***** */
+/*--------------------------------------*/
+
+#contacto{
+  background-color: rgb(26,72,151);
+  box-sizing: border-box; /*No parece tener efecto*/
+  display: grid;
+  grid-template: auto 50px / 700px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+#contacto form{
+  padding: 15px;
+  color: white;
+  display: grid;
+  grid-template: auto / auto;
+  gap: 10px;
+}
+
+#contacto form input,
+#contacto form textarea{
+  padding: 15px 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+#contacto .rrss{
+  width: 70%;
+  display: grid;
+  grid-template: auto / repeat(3, 1fr);
+  justify-items: center;
+  justify-self: center;
+}
+
+#contacto .rrss a{
+  color: white;
+  text-decoration: none;
+  transition: 0.2s ease-in;
+  transition-property: transform, color;
+}
+
+#contacto .rrss a:hover{
+  color: #67ca50;
+  transform: scale(1.2);
+}
+
+#contacto form input[type="submit"]{
+  background-color: #67ca50;
+  font-weight: bold;
+  font-size: 28px;
+  transition: 0.2s ease-in;
+  transition-property: background-color, transform, color;
+}
+
+#contacto form input[type="submit"]:hover{
+  background-color: #1ba300;
+  transform: scale(0.95);
+  color: white;
+}
+
+/* ***** SEXTA SECCIÓN: FOOTER ***** */
+/*-----------------------------------*/
+
+#footer{
+  background-color: rgb(37, 37, 37);
+  color: white;
+  font-size: 0.9em;
+  font-weight: bold;
+  box-sizing: border-box;
+  display: grid;
+  grid-template: auto/auto;
+  justify-content: center;
+}
+
+#footer .copy p{
+  padding: 10px 0 ;
+}
+
+/********************************************************/
+/* * * * * * * * * * * MEDIAQUERIES * * * * * * * * * * */
+/********************************************************/
+
+@media screen and (max-width:1100px) {
+
+  #posts{
+    grid-template: repeat(3,1fr) / repeat(2,1fr);
+  }
+
+  #posts a{
+    min-height: 300px;
+  }
+
+}
+
+@media screen and (max-width:870px) {
+
+  #menu{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+        "about proyectos"
+        "posts contacto";
+  }
+
+  #menu .pieza:hover .front{
+    margin-top: -50vh;
+  }
+
+  #about{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  #about .pieza1{
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+
+  #about .pieza2{
+    grid-column: 1/3;
+    grid-row: 1/2;
+  }
+
+  #about .pieza2 img{
+    width: 150px;
+  }
+
+  #about .pieza3{
+    grid-column: 2/3;
+    grid-row: 2/3;
+  }
+
+  #about .pieza4{
+    grid-column: 1/2;
+    grid-row: 3/4;
+  }
+
+  #about .pieza5{
+    grid-column: 2/3;
+    grid-row: 3/4;
+  }
+
+  #contacto{
+    grid-template: auto 50px / 80%;
+  }
+
+}
+
+@media screen and (max-width:500px) {
+
+  #menu{
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+      "about"
+      "proyectos"
+      "posts"
+      "contacto";
+  }
+
+  #menu .oculto{
+    display: grid;
+    justify-self: end;
+    align-self: flex-end;
+    font-size: 1.6em;
+    font-weight: bold;
+  }
+
+  .pieza-contacto .oculto{
+    color: black;
+  }
+
+  #menu .pieza:hover .front{
+    margin-top: 0;
+  }
+
+  #about{
+    display: grid;
+    grid-template: auto/auto;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  #about .pieza{
+    padding-bottom: 15px;
+  }
+
+  #about .pieza1{
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+
+  #about .pieza2{
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  #about .pieza2 img{
+    width: 150px;
+  }
+
+  #about .pieza3{
+    grid-column: 1/2;
+    grid-row: 3/4;
+  }
+
+  #about .pieza4{
+    grid-column: 1/2;
+    grid-row: 4/5;
+  }
+
+  #about .pieza5{
+    grid-column: 1/2;
+    grid-row: 5/6;
+  }
+
+  #proyectos {  
+    display: grid; /*Layout generado con "grid.layoutit.com" */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 5px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "foto-main foto-main"
+      "foto-main foto-main"
+      "foto-1 foto-2"
+      "foto-1 foto-2"
+      "foto-3 foto-3"
+      "foto-4 foto-5"
+      "foto-4 foto-5"
+      "foto-6 foto-7"
+      "foto-6 foto-7"
+      "foto-8 foto-9"
+      "foto-8 foto-9"
+      "foto-10 foto-11"
+      "foto-10 foto-11"
+      "foto-12 foto-16"
+      "foto-12 foto-16"
+      "foto-13 foto-16"
+      "foto-13 foto-16"
+      "foto-14 foto-16"
+      "foto-14 foto-16"
+      "foto-15 foto-16"
+      "foto-15 foto-16";
+  }
+  
+  .foto-main { grid-area: foto-main; }
+  
+  .foto-1 { grid-area: foto-1; }
+  
+  .foto-3 { grid-area: foto-3; }
+  
+  .foto-2 { grid-area: foto-2; }
+  
+  .foto-4 { grid-area: foto-4; }
+  
+  .foto-5 { grid-area: foto-5; }
+  
+  .foto-6 { grid-area: foto-6; }
+  
+  .foto-7 { grid-area: foto-7; }
+  
+  .foto-8 { grid-area: foto-8; }
+  
+  .foto-9 { grid-area: foto-9; }
+  
+  .foto-10 { grid-area: foto-10; }
+  
+  .foto-11 { grid-area: foto-11; }
+  
+  .foto-12 { grid-area: foto-12; }
+  
+  .foto-13 { grid-area: foto-13; }
+  
+  .foto-14 { grid-area: foto-14; }
+  
+  .foto-15 { grid-area: foto-15; }
+  
+  .foto-16 { grid-area: foto-16; }
+  
+  #posts{
+    grid-template: auto/auto;
+  }
+
+  #contacto .rrss{
+    font-size: 0.7em;
+  }
+
+}
